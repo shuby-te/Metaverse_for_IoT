@@ -6,6 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import org.hyperledger.indy.sdk.wallet.Wallet;
+
+import java.io.File;
+
 import org.hyperledger.indy.sdk.did.Did;
 import org.hyperledger.indy.sdk.did.DidJSONParameters;
 import org.hyperledger.indy.sdk.did.DidResults.CreateAndStoreMyDidResult;
@@ -21,10 +24,14 @@ public class Main {
 		SpringApplication.run(Main.class, args);
 		System.out.println("Hello World");
 
-		String walletName = new JSONObject().put("id", "wallet").toString();
+		System.setProperty("jna.library.path", "lib/");
+
+		System.out.println("Wallet Create");
+		String walletName = new JSONObject().put("id", "wallet-test").toString();
 		String walletKey = new JSONObject().put("key", "1234").toString();
 		Wallet.createWallet(walletName, walletKey).get();
 
+		System.out.println("Wallet Open");
 		Wallet wallet = Wallet.openWallet(walletName, walletKey).get();
 
 		DidJSONParameters.CreateAndStoreMyDidJSONParameter didJson = new DidJSONParameters.CreateAndStoreMyDidJSONParameter(
