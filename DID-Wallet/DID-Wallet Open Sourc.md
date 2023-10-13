@@ -14,11 +14,20 @@ did-wallet에 대한 오픈소스 조사
 - did-wallet을 생성하고 생성한 wallet을 관리하는 다양한 기능들을 제공
 - lock(잠금 및 정보 암호), unlock(잠금 해제), addkey(키 추가), extract(특정 키를 추출), export(지갑 암호화후 반환) 기능들을 지원
 
-## trustfractal/wallet
+## trustfractal/wallet - Fractal Wallet
 - <https://github.com/trustfractal/wallet>
 - Metamask를 기반으로 구축한 암호화폐 지갑인 Fractal Wallet
 - Fractal Wallet 개발환경을 구축하고 분산 ID 자격 증명을 발급 및 저장 가능
-- Fractal Wallet은 암호화폐 지갑으로, 암호화폐 자원을 저장하고 관리하는 등 블록체인과 관련된 기술이므로, 
-분산 식별 및 신원 관리를 위한 did-wallet과는 주 목적이 다르다.
+- Fractal Wallet은 암호화폐 지갑으로, 암호화폐 자원을 저장하고 관리하는 등 블록체인과 관련된 기술이므로 
+분산 식별 및 신원 관리를 위한 did-wallet과는 주 목적이 다르다고 할 수 있음
+
+## github-did
+- <https://github.com/decentralized-identity/github-did>
+- github 플랫폼이 신뢰적이라는 가정 하에, github 플랫폼 자체를 저장소로 활용하여 did에 대한 모든 작업이 간단해지도록 하는 실험성 오픈소스
+- github-did의 목적은 기존의 분산 시스템과 같이 복잡하고 신뢰할 수 없는 인프라 없이 did에 대한 확장을 신속하게 개발하는 것
+- github-did를 위한 cli를 제공하며, 새롭게 생성한 리포지토리를 지갑으로서 사용
+
+
+
 
 
