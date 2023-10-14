@@ -11,12 +11,12 @@
 sequenceDiagram
 Client 1 ->>Blockchain Network: Storing DID and public key
 Client 2 ->>Blockchain Network: Storing DID and public key
-Client 1-->>Broker: Connect with a broker
-Client 2-->>Broker: Connect with a broker
-Client 1-->>Broker: Signs message & Message sending
-Broker-->>Client 2: Forwards message
-Client 2-->>Blockchain Network: Gett`s sender`s public key from Blockchain network
-Blockchain Network-->>Client 2: Verifies a signature using public key
+Client 1->>Broker: Connect with a broker
+Client 2->>Broker: Connect with a broker
+Client 1->>Broker: Signs message & Message sending
+Broker->>Client 2: Forwards message
+Client 2->>Blockchain Network: Gett`s sender`s public key from Blockchain network
+Blockchain Network->>Client 2: Verifies a signature using public key
 ```
 </br>
 
