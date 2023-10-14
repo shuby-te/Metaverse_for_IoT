@@ -5,7 +5,7 @@
 </br>
 
 
-# Communication sequence
+## Communication sequence
 
 ```mermaid
 sequenceDiagram
@@ -20,12 +20,15 @@ Blockchain Network->>Client 2: Verifies a signature using public key
 ```
 </br>
 
-# Progress
+## Progress
 ### [~10.15](https://github.com/Hongyoosung/Metaverse_for_IoT/blob/main/Decentralized_MQTT/Progress/231015.md)
 - Unity 클라이언트와 RaspberryPi 디바이스의 MQTT 통신 완료.
 - Ledger 함수 호출 문제
 
 
+</br>
 
-
+## Reference
+[1] portalchu, [AvataDID](https://github.com/portalchu/Metaverse/tree/main/HyperledgerAries/AvataDID)
+[2] [Hyperledger indy-SDK](https://github.com/hyperledger/indy-sdk/tree/main)
 
