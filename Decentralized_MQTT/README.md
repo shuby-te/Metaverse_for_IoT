@@ -30,5 +30,6 @@ Blockchain Network->>Client 2: Verifies a signature using public key
 
 ## Reference
 [1] portalchu, [AvataDID](https://github.com/portalchu/Metaverse/tree/main/HyperledgerAries/AvataDID)
+
 [2] [Hyperledger indy-SDK](https://github.com/hyperledger/indy-sdk/tree/main)
 
