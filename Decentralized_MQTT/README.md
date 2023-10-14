@@ -26,7 +26,8 @@ Unity 클라이언트와 RaspberryPi 디바이스의 MQTT 통신 완료.
 - 에러 문구는 "파라미터로 입력된 값이 유효하지 않음"
 - 하지만 함수 호출문의 파라미터 자료형과 함수 정의문의 파라미터 자료형은 일치함
 - 아래 "string nym_request = Ledger.BuildGetNymRequestAsync(submitter_did, target_did).Result;"에 에러가 발생
-  ```
+  
+  ```C++
   public string GetNymTransaction(string userDid, string target_did)
     {
         string submitter_did = userDid;
