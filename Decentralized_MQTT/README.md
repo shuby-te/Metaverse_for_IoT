@@ -10,7 +10,7 @@
 ```mermaid
 sequenceDiagram
 Client 1 ->>Blockchain Network: Storing DID and public key
-Client 2 ->>Blockchain Netwokr: Storing DID and public key
+Client 2 ->>Blockchain Network: Storing DID and public key
 Client 1-->>Broker: Connect with a broker
 Client 2-->>Broker: Connect with a broker
 Client 1-->>Broker: Signs message & Message sending
