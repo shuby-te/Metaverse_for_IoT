@@ -161,9 +161,187 @@ did의 유형을 나타내는 IdentityType은 did 유형들을 나열한 enum(�
         }
     }
 
-## 
+## FileSystemStore class & InMemoryStore class
+두 클래스는 모두 데이터를 저장하고 관리하는 함수들이 선언된 Store 인터페이스를 구현한 클래스이다. FileSystemStore 클래스는 파일 입출력 스트림 클래스를 활용하여 파일 시스템에 데이터를 저장하는 방식이고, InMemoryStore 클래스는 map을 활용하여 메모리 상에서 데이터를 저장하고 관리하는 방식이다. 이 오픈소스에서는 아래에서 설명할 Wallet 클래스의 필드로 InMemoryStore 클래스의 객체를 사용하고, main에서 FileSystemStore 클래스를 사용하여 실제 데이터를 저장하였다.
 
+FileSystemStore 클래스
 
+    import java.io.File;    //C++의 include와 같은 역할 (라이브러리를 포함시켜 해당 라이브러리의 리소스를 사용할 수 있도록 함)
+    import java.io.FileInputStream;
+    import java.io.FileNotFoundException;
+    import java.io.FileOutputStream;
+    import java.io.IOException;
+    import java.io.OutputStream;
+    import java.io.UnsupportedEncodingException;
+    import java.nio.file.Paths;
+    import java.util.ArrayList;
+    import java.util.Collections;
+    
+    public class FileSystemStore implements Store { //Store 인터페이스를 상속받아 구현하는 FileSystemStore 클래스 (Store 인터페이스는 Store.java에 있음)
+    
+        static private final String fileExtension = ".id";  //wallet에 데이터를 저장하고자 할 때, 저장할 파일의 확장자를 나타내는 변수
+    
+        private String path;
+    
+        public FileSystemStore(String path) {   //생성자 - 경로를 받아 디렉토리를 만들고 그 경로를 path변수에 저장
+            File f = new File(path);
+            f.mkdirs();
+    
+            this.path = path;
+        }
+    
+        @Override
+        public boolean put(String label, String content) {  //put 함수 오버라이딩 - 데이터를 넣을 파일명(label)과 넣을 데이터(content)를 입력으로 받아 데이터 넣기 결과를 bool값으로 반환
+            boolean ret = false;
+            OutputStream out = null;
+            try {
+                out = new FileOutputStream(getFilename(label)); //파일을 출력스트림에 올려 write를 할 수 있도록 함.
+                out.write(content.getBytes());  //write할 데이터를 byte형식(1바이트 크기 정수 자료형)으로 반환하여 출력 스트림에 write
+                ret = true;
+            } catch (IOException e) {   //예외 처리
+                e.printStackTrace();
+                ret = false;
+            } finally {
+                try {
+                    out.close();
+                } catch (IOException e) {   //예외 처리
+                    e.printStackTrace();
+                }
+            }
+            return ret;
+        }
+    
+        @Override
+        public String get(String label) {   //wallet의 데이터를 저장할 파일의 파일명을 string형식으로 반환
+            return readToString(getFilename(label));
+        }
+    
+        @Override
+        public ArrayList<String> list() {     //현재 경로의 파일(디렉토리)의 내부 파일들의 파일명 및 확장자를 출력하고 각 파일의 이름들을 목록화하여 반환하는 함수
+            ArrayList<String> labels = new ArrayList<String>();
+    
+            File d = new File(this.path);
+            if (d.isDirectory()) {      //path 경로의 파일이 디렉토리일 경우 아래의 블록을 실행
+                String files[] = d.list();      //디렉토리의 파일 리스트를 string 배열에 저장
+                for (String f : files) {    //각 파일들에 대하여 전체 파일명을 출력하고 파일명과 확장자를 분리해서 출력한 뒤, labels객체에 파일의 이름을 추가
+                    System.out.println("file: " + f);
+                    // Because the parameter of String.split is regular expression,
+                    // if dot(.) passed directly, it will match any char in the string,
+                    // so here must use Escape character.
+                    String[] strArray = f.split("\\."); //점(.)을 기준으로 문자열을 자르기 (파일명과 확장자를 분리하기 위함)
+                    if (strArray.length == 2) {
+                        String filename = strArray[0];
+                        String extension = "." + strArray[1];
+                        System.out.println("filename: " + filename + ", ext: " + extension);    //파일명과 확장자를 분리해서 출력
+                        if (extension.equals(fileExtension)) {  //현재 파일의 확장자가 wallet의 저장소용 확장자와 동일하다면 list객체에 파일명을 추가
+                            labels.add(filename);
+                        }
+                    }
+                }
+            }
+    
+            Collections.sort(labels);   //목록화한 파일명들을 알파벳 순으로 정렬
+            return labels;
+        }
+    
+        @Override
+        public boolean exists(String label) {   //wallet의 데이터를 저장할 파일이 존재하는지 여부를 bool값으로 반환
+            File f = new File(getFilename(label));
+            return f.exists();
+        }
+    
+        @Override
+        public boolean remove(String label) {   //wallet의 데이터를 저장할 파일을 삭제
+            File f = new File(getFilename(label));
+            return f.delete();
+        } 
+    
+        private static String readToString(String fileName) {  //파일명을 입력으로 받아 파일의 내용을 입력스트림의 read함수로 읽어 저장하고 이를 URF-8형식으로 인코딩하여 string형식으로 반환
+            String encoding = "UTF-8";  
+            File file = new File(fileName);  
+            Long filelength = file.length();  
+            byte[] filecontent = new byte[filelength.intValue()];  
+            try {  
+                FileInputStream in = new FileInputStream(file);  //파일을 읽어들이기 위해 입력스트립에 올리기
+                in.read(filecontent);   //read 함수로 파일을 읽어들인 뒤 filecontent변수에 읽어들인 것을 저장
+                in.close();  
+            } catch (FileNotFoundException e) {  
+                e.printStackTrace();  
+            } catch (IOException e) {  
+                e.printStackTrace();  
+            }  
+    
+            try {  
+                return new String(filecontent, encoding);   //파일의 데이터와 인코딩 형식을 String타입으로 변환하여 반환
+            } catch (UnsupportedEncodingException e) {  
+                e.printStackTrace();  
+                return null;  
+            }  
+        }
+    
+        private String getFilename(String label) {  //wallet의 데이터를 저장할 파일의 파일명을 입력으로 받아 해당 파일의 경로, 파일명, 확장자를 모두 합친 string 문자열을 반환
+            return Paths.get(this.path, label).toString() + fileExtension;
+        }
+    
+    }
 
+InMemoryStore 클래스
 
+    import java.util.ArrayList;
+    import java.util.Collections;
+    import java.util.HashMap;
+    import java.util.Map;
+    import java.util.Set;
+    
+    public class InMemoryStore implements Store {   //Store인터페이스를 상속받아 구현하여, 데이터를 메모리 내의 맵을 사용하여 저장하고 관리하는 InMemoryStore클래스
+        private Map<String, String> storage;    //label를 키로 사용하여 content라는 데이터를 저장하기 위한 맵 객체
+    
+        public InMemoryStore() {    //맵 객체를 할당 및 생성하는 생성자
+            storage = new HashMap<String, String>();
+        }
+    
+        @Override
+        public boolean put(String label, String content) {  //입력으로 받은 데이터를 맵 객체에 저장하는 함수
+            storage.put(label, content);
+            return true;
+        }
+    
+        @Override
+        public String get(String label) {   //입력으로 받은 label에 해당되는 value값을 반환하는 함수
+            return storage.get(label);
+        }
+    
+        @Override
+        public ArrayList<String> list() {   //데이터 목록의 모든 label을 목록화하여 반환하는 함수
+            ArrayList<String> keys = new ArrayList<String>();   //데이터 목록을 저장할 리스트 객체
+            Set<String> keySet = storage.keySet();  //keySet()을 이용하여 모든 key값(label)을 가져와 저장
+            for (String s : keySet) {   //keys 객체에 가져온 key값들을 저장
+                keys.add(s);
+            }
+            Collections.sort(keys);     //key값들을 알파벳 순으로 정렬
+            return keys;
+        }
+    
+        @Override
+        public boolean exists(String label) {   //입력으로 받은 label에 해당되는 value값이 존재하는지 여부를 bool값으로 반환
+            return storage.containsKey(label);
+        }
+    
+        @Override
+        public boolean remove(String label) {   //입력으로 받은 label에 해당되는 데이터를 삭제하는 함수
+            storage.remove(label);
+            return true;
+        }
+    }
 
+Store 인터페이스
+
+    import java.util.ArrayList;
+    
+    public interface Store {    //데이터를 저장, 반환, 목록화, 검색, 삭제하기 위한 Store인터페이스 
+        boolean put(String label, String content);
+        String get(String label);
+        ArrayList<String> list();
+        boolean exists(String label);
+        boolean remove(String label);
+    }
