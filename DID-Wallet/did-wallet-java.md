@@ -345,3 +345,101 @@ Store 인터페이스
         boolean exists(String label);
         boolean remove(String label);
     }
+
+## Wallet class
+이 오픈소스의 핵심인 wallet에 대한 정보를 저장하는 클래스이다. Store 클래스의 객체를 필드로 가지며, wallet에 데이터를 삽입, 반환, 삭제, 검색, 목록화하는 메서드를 정의한다.
+
+    import java.util.ArrayList;
+    
+    import com.alibaba.fastjson.JSON;
+    import com.alibaba.fastjson.JSONObject;
+    
+    public class Wallet {   //did wallet의 주요 기능인 wallet에 대한 클래스
+        private Store store;    //Store인터페이스 타입의 객체
+    
+        public Wallet() {   //부모 객체를 자식 클래스로 메모리 할당
+            this.store = new InMemoryStore();
+        }
+    
+        public Wallet(Store store) {
+            this.store = store;
+        }
+    
+        public void put(String label, Identity id) {    //데이터를 저장할 파일명(label)과 did 정보에 대한 객체(content)를 입력으로 받아 store객체의 맵 변수에 추가
+            String content = id.toString();
+            store.put(label, content);
+        }
+    
+        public Identity get(String label) {     //입력으로 받은 label에 해당되는 데이터를 가져와서 JSON 형식으로 파싱한 뒤 JSON 객체의 type값을 기반으로 Identity객체를 생성 및 반환하는 함수
+            String content = store.get(label);
+    
+            JSONObject obj = JSON.parseObject(content); //데이터를 JSON형식으로 파싱 (JSON 파싱 : JSON 문자열의 구문을 분석하고 그 결과에서 JavaScript값이나 객체를 생성하는 것)
+    
+            String type = obj.getString("type");    //JSON객체의 type필드의 값을 얻기
+    
+            Identity id = null;
+            switch (IdentityType.valueOf(type)) {   //type 유형에 따라 그에 맞는 Identity타입 객체를 id객체에 저장
+                case Raw:
+                    RawIdentity r = obj.toJavaObject(RawIdentity.class);
+                    id = r;
+                    break;
+            
+                default:
+                    System.out.println("unsupported identity type: " + type);   //이 오픈소스에서는 Raw타입의 유형만 다루므로, 나머지 유형은 에러 처리
+                    break;
+            }
+    
+            return id;
+        }
+    
+        public void remove(String label) {  //wallet의 저장소에서 입력을 받은 label에 해당되는 데이터를 삭제하는 함수
+            store.remove(label);
+        }
+    
+        public boolean exists(String label) {   //wallet의 저장소에서 입력을 받은 label에 해당되는 데이터가 존재하는지 여부를 bool값을 반환하는 함수
+            return store.exists(label);
+        }
+    
+        public ArrayList<String> list() {   ////wallet의 저장소에 저장된 데이터들의 label 목록을 반환하는 함수
+            return store.list();
+        }
+    }
+
+## main class
+위에서 정의한 클래스들을 직접 테스트한다. 키의 id, 개인키, 공개키, did 값은 모두 임의의 값을 사용하였으며, 실행을 통해 실제로 디렉토리와 파일이 생성되고 데이터가 올바르게 저장됨을 확인할 수 있었다.
+
+    import java.util.ArrayList;
+    
+    public class main {
+        public static void main( String[] args )
+        {
+            Wallet w = new Wallet(new FileSystemStore("./wallet"));    //입력으로 받은 경로 위치에 디렉토리를 생성
+    
+            String keyID = "keys-1";
+            String privateKeyHex = "a889f4da49ff8dd6b03d4334723fe3e5ff55ae6a2483de1627bec873b0b73e1e86eabd6abce2f96553251de61def0265784688ff712ce583621a5b181ef21639";
+            String publicKeyHex = "86eabd6abce2f96553251de61def0265784688ff712ce583621a5b181ef21639";
+            Key key = new Key(keyID, KeyType.Ed25519, privateKeyHex, publicKeyHex);     //키의 식별자, 유형, 개인키, 공개키를 입력으로 받아 Key타입 객체 생성
+    
+            String did = "did:example:3dda540891d14a1baec2c7485c273c00";    //임의의 did 변수
+            RawIdentity rawIdentity = new RawIdentity(did, key);    //did변수와 key객체를 포함하는 RawIdentity타입의 객체 생성
+    
+            w.put("User1", rawIdentity);    //파일명(label)이 User1이고 파일의 내용(content)이 rawIdentity변수인 파일을 생성하고 wallet 디렉토리에 저장
+    
+            ArrayList<String> list = w.list();  //wallet에 포함된 label 목록을 저장하기 위한 리스트 객체
+            for (String label: list) {
+                Identity identity = w.get(label);
+                if (identity != null && identity instanceof RawIdentity) {    //identity(did 정보)가 존재하고 RawIdentity 클래스의 인스턴스 일 경우 아래의 코드를 동작함
+                    RawIdentity rid = (RawIdentity)identity;    //Identity(부모)타입의 객체를 RawIdentity(자식)타입으로 형변환
+                    System.out.println(rid.getId());    //did의 식별자 출력 (아마 did 이름으로 추정)
+                    System.out.println(rid.getType());  //did의 타입 출력 (아마 Raw로 추정)
+    
+                    Key k = rid.getKey();   //키에 대한 정보 저장
+                    System.out.println("Key: ");    //여기부터 키의 정보들 출력
+                    System.out.println(k.getId());
+                    System.out.println(k.getType());
+                    System.out.println(k.getPrivateKeyHex());
+                    System.out.println(k.getPublicKeyHex());
+                }
+            }
+        }
+    }
