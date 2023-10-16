@@ -25,6 +25,9 @@ Blockchain Network->>Client 2: Verifies a signature using public key
 - Unity 클라이언트와 RaspberryPi 디바이스의 MQTT 통신 완료.
 - Ledger 함수 호출 문제
 
+### [~10.16](https://github.com/Hongyoosung/Metaverse_for_IoT/blob/main/Decentralized_MQTT/Progress/231016.md)
+- 디바이스 센서 데이터 수신
+- 토픽 배열화
 
 </br>
 
