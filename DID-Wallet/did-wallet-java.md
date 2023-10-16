@@ -225,9 +225,6 @@ FileSystemStore 클래스
                 String files[] = d.list();      //디렉토리의 파일 리스트를 string 배열에 저장
                 for (String f : files) {    //각 파일들에 대하여 전체 파일명을 출력하고 파일명과 확장자를 분리해서 출력한 뒤, labels객체에 파일의 이름을 추가
                     System.out.println("file: " + f);
-                    // Because the parameter of String.split is regular expression,
-                    // if dot(.) passed directly, it will match any char in the string,
-                    // so here must use Escape character.
                     String[] strArray = f.split("\\."); //점(.)을 기준으로 문자열을 자르기 (파일명과 확장자를 분리하기 위함)
                     if (strArray.length == 2) {
                         String filename = strArray[0];
