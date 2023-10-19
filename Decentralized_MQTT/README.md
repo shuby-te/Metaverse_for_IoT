@@ -29,6 +29,9 @@ Blockchain Network->>Client 2: Verifies a signature using public key
 - 디바이스 센서 데이터 수신
 - 토픽 배열화
 
+### [~10.19](https://github.com/Hongyoosung/Metaverse_for_IoT/blob/main/Decentralized_MQTT/Progress/231019.md)
+- 메시지 암호화
+
 </br>
 
 ## Reference
