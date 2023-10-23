@@ -32,6 +32,10 @@ Blockchain Network->>Client 2: Verifies a signature using public key
 ### [~10.19](https://github.com/Hongyoosung/Metaverse_for_IoT/blob/main/Decentralized_MQTT/Progress/231019.md)
 - 메시지 암호화
 
+### [~10.23](https://github.com/Hongyoosung/Metaverse_for_IoT/blob/main/Decentralized_MQTT/Progress/231023.md)
+- 지갑 생성, Pool 접속
+- 메시지 서명
+
 </br>
 
 ## Reference
