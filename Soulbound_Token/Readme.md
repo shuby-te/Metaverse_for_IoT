@@ -15,6 +15,6 @@
 
 
 ### Reference (참고자료)
-  * [카린의 Solidity 명풍 솔리디티](https://docs.solidity-kr.org:8443)
+  * [카린의 Solidity 명품 솔리디티](https://docs.solidity-kr.org:8443)
   * IDE - Remix, Truffle, Ganache 
 
