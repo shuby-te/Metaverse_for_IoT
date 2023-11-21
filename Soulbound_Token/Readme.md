@@ -13,10 +13,8 @@
 
 ### 도구
 
-* samrt contract 테스틀 용
-  -  
-    
+
 ### Reference (참고자료)
-  * [카린의 Solidity 명풍 솔리디터](https://docs.solidity-kr.org:8443)
+  * [카린의 Solidity 명풍 솔리디티](https://docs.solidity-kr.org:8443)
   * IDE - Remix, Truffle, Ganache 
 
