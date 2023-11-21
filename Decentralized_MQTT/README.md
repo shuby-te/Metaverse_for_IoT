@@ -36,6 +36,10 @@ Blockchain Network->>Client 2: Verifies a signature using public key
 - 지갑 생성, Pool 접속
 - 메시지 서명
 
+### [~11.22](https://github.com/Hongyoosung/Metaverse_for_IoT/blob/main/Decentralized_MQTT/Progress/231122.md)
+- RaspberryPi에 Hyperledger-indy 설치
+- 디바이스 센서 데이터 서명 및 송신
+  
 </br>
 
 ## Reference
