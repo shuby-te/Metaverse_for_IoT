@@ -13,6 +13,8 @@
 - 교육 자격에 대한 자격증명 (Verifiable Credentials)
    - W3C Verifiable Credentials
    - Soul Bound Token
+   - SD-JWT (Selective Disclosure - JWT)
+   - JOSE: JWT, JWS, JWE, JWK, JWS
 - 디지털 지갑 (Digital Wallet)
   - Wallet for Digital Identity
   - Universal Wallet
@@ -20,6 +22,8 @@
   - MQTT
   - Decentralized MQTT
 
+## 관련 참고 사이트
 
+- 
 
 
