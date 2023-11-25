@@ -26,5 +26,10 @@ MQTT is designed as an extremely lightweight publish/subscribe messaging transpo
 
 ## Questions to be answered by myself
 * How does the MQTT client obtain what kinds of topics that producers provide?
-* How does the MQTT client obtain the information of the publisher?
+* How does the MQTT client obtain the publisher's information?
+* Is there a mechanism to aggregate encryption for dedicated group?
+
+## References 
+* Designated-Verifier Aggregate Signature Scheme With Sensitive Data Privacy Protection for Permissioned Blockchain-Assisted IIoT
+
    
