@@ -14,8 +14,20 @@ ubuntu를 실행하여 다음의 명령어들을 입력
 
 ## 개발 환경 구성
 vscode 확장에서 Easy C++ Projects와 C/C++ 등의 도구를 설치한 뒤, C++ 프로젝트 생성
+아래의 웹사이트를 참고하여 컴파일 및 디버깅에 대한 환경 설정
 
-https://tiny-jay.tistory.com/5 해당 웹사이트 참고
+https://tiny-jay.tistory.com/5
+
+## 개발 도구 추가
+vscode에서 터미널을 열어 명령어를 통해 개발 도구들을 추가. 아래의 명령어들을 순서대로 실행
+
+    $ sudo apt-get udpate
+    $ sudo apt-get install make
+    $ sudo apt-get install build-essential gdb
+    $ sudo apt-get install nlohmann-json3-dev
+    $ sudo apt-get install git
+    $ sudo apt-get install rustc
+    $ sudo apt-get install cargo
 
 
 
