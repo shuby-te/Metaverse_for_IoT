@@ -1,0 +1,29 @@
+﻿  DIDWallet.cpp
+C:\programming language\coding\DID_Wallet\DID_Wallet\FileSystemStore.h(11,10): warning C4067: 전처리기 지시문 다음에 예기치 않은 토큰이 있습니다. 줄 바꿈 문자가 필요합니다.
+  (소스 파일 'DIDWallet.cpp'을(를) 컴파일하는 중)
+  
+C:\programming language\coding\DID_Wallet\DID_Wallet\InMemoryStore.h(10,10): warning C4067: 전처리기 지시문 다음에 예기치 않은 토큰이 있습니다. 줄 바꿈 문자가 필요합니다.
+  (소스 파일 'DIDWallet.cpp'을(를) 컴파일하는 중)
+  
+  FileSystemStore.cpp
+C:\programming language\coding\DID_Wallet\DID_Wallet\FileSystemStore.h(11,10): warning C4067: 전처리기 지시문 다음에 예기치 않은 토큰이 있습니다. 줄 바꿈 문자가 필요합니다.
+  (소스 파일 'FileSystemStore.cpp'을(를) 컴파일하는 중)
+  
+  Identity.cpp
+  InMemoryStore.cpp
+C:\programming language\coding\DID_Wallet\DID_Wallet\InMemoryStore.h(10,10): warning C4067: 전처리기 지시문 다음에 예기치 않은 토큰이 있습니다. 줄 바꿈 문자가 필요합니다.
+  (소스 파일 'InMemoryStore.cpp'을(를) 컴파일하는 중)
+  
+  Key.cpp
+  Main.cpp
+C:\programming language\coding\DID_Wallet\DID_Wallet\FileSystemStore.h(11,10): warning C4067: 전처리기 지시문 다음에 예기치 않은 토큰이 있습니다. 줄 바꿈 문자가 필요합니다.
+  (소스 파일 'Main.cpp'을(를) 컴파일하는 중)
+  
+C:\programming language\coding\DID_Wallet\DID_Wallet\InMemoryStore.h(10,10): warning C4067: 전처리기 지시문 다음에 예기치 않은 토큰이 있습니다. 줄 바꿈 문자가 필요합니다.
+  (소스 파일 'Main.cpp'을(를) 컴파일하는 중)
+  
+  TestDID.cpp
+  코드를 생성하고 있습니다...
+  DID_Wallet.vcxproj -> C:\programming language\coding\DID_Wallet\x64\Debug\DID_Wallet.exe
+  'pwsh.exe'은(는) 내부 또는 외부 명령, 실행할 수 있는 프로그램, 또는
+  배치 파일이 아닙니다.
