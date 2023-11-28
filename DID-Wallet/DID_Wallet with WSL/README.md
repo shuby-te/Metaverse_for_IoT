@@ -41,7 +41,7 @@ didkit 깃허브 오픈소스에서 제공하는 명령어들을 사용하여 di
     $ git clone https://github.com/spruceid/ssi ../ssi --recurse-submodules
     $ cd didkit
     $ cargo build
-    $ cd didkit/lib/c
+    $ cd lib/c
     $ make -C ../ ../target/release/libdidkit.so
 
 2번째 명령어로 깃허브를 클론하면 didkit라는 디렉토리가 생성되며, 마지막 명령어로 라이브러리를 빌드하면 didkit/target 디렉토리가 생성됨. target 디렉토리에 didkit.h라는 헤더파일이 포함되어 있음.
