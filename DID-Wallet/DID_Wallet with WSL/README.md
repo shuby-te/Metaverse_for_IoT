@@ -22,7 +22,7 @@ https://tiny-jay.tistory.com/5
 ## 개발 도구 추가
 vscode에서 터미널을 열어 명령어를 통해 개발 도구들을 추가. 아래의 명령어들을 순서대로 실행
 
-    $ sudo apt-get udpate
+    $ sudo apt-get update
     $ sudo apt-get install make
     $ sudo apt-get install build-essential gdb
     $ sudo apt-get install nlohmann-json3-dev
@@ -39,6 +39,7 @@ didkit 깃허브 오픈소스에서 제공하는 명령어들을 사용하여 di
     $ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
     $ git clone https://github.com/spruceid/didkit.git
     $ git clone https://github.com/spruceid/ssi ../ssi --recurse-submodules
+    $ cd didkit
     $ cargo build
     $ cd didkit/lib/c
     $ make -C ../ ../target/release/libdidkit.so
