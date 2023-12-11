@@ -4,13 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using System.IO;
-using Unity.VisualScripting;
 
 
 public class HttpClient : MonoBehaviour
 {
-    private static HttpClient _instance;
-
     string test_url = "http://220.68.5.139:9000/genesis";
     string acapy_url = "http://220.68.5.139:8001/connections";
     string acapy_did_url = "http://220.68.5.139:8001/wallet/did";
@@ -19,11 +16,20 @@ public class HttpClient : MonoBehaviour
 
     string genesis_file = null;
 
+    private static HttpClient instance = null;
+    // singleton
     public static HttpClient GetInstance()
     {
-        if (_instance == null)
-            _instance = new HttpClient();
-        return _instance;
+        if (instance == null)
+        {
+            instance = FindObjectOfType<HttpClient>();
+            if (instance == null)
+            {
+                GameObject container = new GameObject("HttpClient");
+                instance = container.AddComponent<HttpClient>();
+            }
+        }
+        return instance;
     }
 
     public IEnumerator HttpGet(string url, Action<UnityWebRequest> callback)
@@ -48,7 +54,7 @@ public class HttpClient : MonoBehaviour
 
     IEnumerator HttpPost(string url, string json, Action<UnityWebRequest> callback)
     {
-        using (UnityWebRequest www = UnityWebRequest.Post(url, json))
+        using (UnityWebRequest www = UnityWebRequest.PostWwwForm(url, json))
         {
             byte[] jsonToSend = new System.Text.UTF8Encoding().GetBytes(json);
             www.uploadHandler = new UploadHandlerRaw(jsonToSend);
@@ -79,7 +85,7 @@ public class HttpClient : MonoBehaviour
 
     public void Post(string url, string body, Action<string> onSuccess, Action<string> onError)
     {
-        UnityWebRequest request = UnityWebRequest.Post(url, body);
+        UnityWebRequest request = UnityWebRequest.PostWwwForm(url, body);
         SendRequest(request, onSuccess, onError);
     }
 
@@ -100,13 +106,13 @@ public class HttpClient : MonoBehaviour
         };
     }
 
-    public string CreateGenesisFile(string path)
+    public string CreateGenesisFile(string path, string test_url)
     {
-        string test_url = "http://220.68.5.139:9000/genesis";
+        test_url = "http://220.68.5.139:9000/genesis";
         string genesis_file = null;
         Get(test_url, (response) =>
         {
-            Debug.Log("GET 夸没 己傍: " + response);
+            Debug.Log("GET 鞖旍箔 靹标车: " + response);
             StreamWriter sw;
             if (false == File.Exists(path))
             {
@@ -117,9 +123,10 @@ public class HttpClient : MonoBehaviour
             }
         }, (error) =>
         {
-            Debug.LogError("GET 夸没 角菩: " + error);
+            Debug.LogError("GET 鞖旍箔 鞁ろ尐: " + error);
         });
 
+        
         return genesis_file;
     }
 }
